@@ -1,10 +1,12 @@
-##SEGURIDAD DE SWITCHES CAPA 2
+#SEGURIDAD DE SWITCHES CAPA 2
 switchport mode access -> Este comando hace que la interfaz o puerto no transporte varias vlan, solo trabajará como un puerto normal de acceso. 
 Si el comando anterior lo complementamos con un switchport port-security evitamos ataques de MAC flooding, con este comando podemos controlar que dispositivos pueden conectarse a ese puerto en especifico. 
 
+```
 Switch(config)# interface fa0/1
 Switch(config-if)# switchport mode access
 Switch(config-if)# switchport port-security
+````
 
 Algo muy importante que debemos recordar es que el comando switchport port-security solo se puede usar cuando el puerto esta en mode Access. 
 

@@ -1,0 +1,44 @@
+##SEGURIDAD DE SWITCHES CAPA 2
+switchport mode access -> Este comando hace que la interfaz o puerto no transporte varias vlan, solo trabajará como un puerto normal de acceso. 
+Si el comando anterior lo complementamos con un switchport port-security evitamos ataques de MAC flooding, con este comando podemos controlar que dispositivos pueden conectarse a ese puerto en especifico. 
+
+Switch(config)# interface fa0/1
+Switch(config-if)# switchport mode access
+Switch(config-if)# switchport port-security
+
+Algo muy importante que debemos recordar es que el comando switchport port-security solo se puede usar cuando el puerto esta en mode Access. 
+
+Comando de verificación: 
+Switch# show port-security interface //
+Muestra la configuración actual de seguridad del puerto o interfaz.
+
+Mas comandos: 
+Switch(config-if)# switchport port-security maximum 3
+/significa que el puerto soloa aceptara hasta 3 direcciones MAC diferentes en este puerto/
+
+Switch(config-if)# switchport port-security mac-address sticky
+/Aprende automáticamente las MAC conectadas y las guarda como permitidas/
+
+S1(config)# interface fa0/1 S1(config-if)# switchport port-security aging time 10 
+/La MAC segura expirará después de 10 minutos/
+
+S1(config-if)# switchport port-security aging type inactivity
+/La MAC expirará solo si NO hay actividad, no hay trafico/
+
+Este grupo de comandos es muy útil en lugares donde cambia dispositivos frecuentemente. Así no se tiene que borrar la MAC manualmente. 
+
+Switch(config-if)# switchport port-security violation {protect | restrict | shutdown}
+Tenemos 3 combinaciones de comandos.
+Este sirve para elegir qué acción tomará el switch cuando ocurra una violación de PortSecurity 
+- switchport port-security violation protect
+/MAC invalida = bloqueada silenciosamente
+
+- switchport port-security violation restrict
+/MAC invalida = bloqueada + registrada 
+
+- switchport port-security violation shutdown
+/Violación = puerto apagado/
+
+
+
+
